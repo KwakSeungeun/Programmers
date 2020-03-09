@@ -2,6 +2,14 @@
 
 def solution(bridge_length, weight, truck_weights):
     answer = 0
+    curWeight = 0
+    time = 0
+    while len(truck_weights) > 0:
+        time += 1
+        n = len(truck_weights)-1
+        while curWeight + truck_weights[n] <= weight:
+            truck_weights.pop()
+            n -= 1
     return answer
 
 def main():
