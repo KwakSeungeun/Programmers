@@ -1,46 +1,40 @@
 # 코딩테스트 연습(코딩테스트 고득점 Kit) > 완전탐색 > 소수찾기
-
-def checkprime(num):
-    if num == 1:
-        return False
-    for i in range(2,num):
-        if num % i == 0:
-            return False
-    return True
-
-def makenum(src):
-    if len(src) == 1 :
-        return src
-    res = []
-    cur = src[0]
-    res.append(cur)
-    back = makenum(src[1:])
-    if len(back) == 1:
-        res.append(back)
-    for temp in back:
-        res.append(cur + temp)
-        res.append(temp + cur)
-    return res
-    
+# for 문에서 함수호출이 효율적이진 않음
+from itertools import permutations
 
 def solution(numbers):
     answer = 0
-    # 조합 만들기 --> O(N^2)
-    numlist = makenum(numbers)
+    numlist = list()
+    for n in range(1, len(numbers)+1):
+        temp = ["".join(i) for i in permutations(numbers,n)]
+        numlist.extend(temp)
+    numlist = list(set(map(lambda x: int(x), numlist)))
     print(numlist)
-
-    # 조합 list 소수 체크해서 count --> O(N^2)
-    visited = [False for _ in range(10000000)]
+    
     for num in numlist:
-        if visited[int(num)]==False and checkprime(int(num)):
-            visited[int(num)] = True
-            answer += 1
+        if num == 1 or num == 0:
+            continue
+        i = 2
+        while i*i < num:
+            if num%i == 0:
+                answer -= 1
+                break
+            i += 1
+        answer += 1
     return answer
 
 def main():
-    res = solution("011")
-    print("정답 : ")
+    # res = solution("011")
+    # print("정답 : 2")
+    # print("결과 : " + str(res))
+    res = solution("17")
+    print("정답 : 3")
     print("결과 : " + str(res))
+    # res = solution("0001")
+    # print("정답 : 0")
+    # print("결과 : " + str(res))
+
+
 
 
 if __name__ == "__main__":
