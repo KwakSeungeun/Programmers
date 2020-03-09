@@ -1,5 +1,6 @@
 # 코딩테스트 연습(코딩테스트 고득점 Kit) > 완전탐색 > 소수찾기
 # for 문에서 함수호출이 효율적이진 않음
+# sqrt사용했을 때 9와 같은거 제대로 체크 못함! =!! 필요!
 from itertools import permutations
 
 def solution(numbers):
@@ -15,7 +16,7 @@ def solution(numbers):
         if num == 1 or num == 0:
             continue
         i = 2
-        while i*i < num:
+        while i*i <= num:
             if num%i == 0:
                 answer -= 1
                 break
